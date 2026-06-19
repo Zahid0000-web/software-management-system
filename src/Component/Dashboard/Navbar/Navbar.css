@@ -1,0 +1,12 @@
+/* Navbar Styles */
+nav {
+  transition: all 0.3s ease;
+}
+
+nav button {
+  transition: all 0.2s ease;
+}
+
+nav button:active {
+  transform: scale(0.95);
+}

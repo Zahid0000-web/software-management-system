@@ -1,0 +1,8 @@
+@import "tailwindcss";
+/* Resimg.css */
+.res-banner {
+  background-image: url("/images/res.jpg"); /* public/images/ folder me image rakho */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

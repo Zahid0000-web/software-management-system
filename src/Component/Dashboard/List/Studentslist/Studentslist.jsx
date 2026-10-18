@@ -1,6 +1,6 @@
 // Studentslist.jsx
 import React, { useEffect, useState } from "react";
-import StudentCard from "./StudentCard";
+import StudentCard from "./Studentcard";
 import { getFeeData } from "./Feestorage";
 
 const API_URL = "http://localhost:5001";

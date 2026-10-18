@@ -1,6 +1,6 @@
 // FeeReport.jsx
 import React, { useEffect, useState } from "react";
-import { getFeeData, getMonthLabel } from "./feeStorage";
+import { getFeeData, getMonthLabel } from "./Feestorage";
 
 const API_URL = "http://localhost:5001";
 

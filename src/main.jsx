@@ -5,13 +5,16 @@ import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./Component/Global State/Ctx.jsx";
 import { PostsProvider } from "./Component/Global State/PostsContext/PostsContext.jsx";
+import { AuthProvider as WebsiteAuthProvider } from "./Component/Website/Global State/Ctx.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <PostsProvider>
-          <App />
+          <WebsiteAuthProvider>
+            <App />
+          </WebsiteAuthProvider>
         </PostsProvider>
       </AuthProvider>
     </BrowserRouter>

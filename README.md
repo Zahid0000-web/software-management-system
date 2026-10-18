@@ -1,12 +1,31 @@
-# React + Vite
+# Better Training Network
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The public training-network website is served at `/`. The existing admin panel
+remains available at `/login` and `/dashboard`.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Install the frontend dependencies and start Vite:
 
-## Expanding the ESLint configuration
+```sh
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Start the existing API in a second terminal:
+
+```sh
+npm --prefix Backend install
+npm --prefix Backend run dev
+```
+
+Vite proxies `/api/*` to `http://localhost:5001` during development. Set
+`VITE_API_URL` only when the API is hosted on a different origin; otherwise the
+frontend uses same-origin `/api` requests.
+
+## Deployment
+
+The Vercel configuration deploys the frontend and `Backend` as services.
+Requests to `/api/*` are sent to the backend service; all other routes go to
+the frontend. Configure the database connection in the deployment environment
+instead of committing credentials.

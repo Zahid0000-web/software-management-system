@@ -26,7 +26,7 @@ if (typeof dns.setDefaultResultOrder === "function") {
   dns.setDefaultResultOrder("ipv4first");
 }
 
-const mongoUri = process.env.MONGO_URI?.trim();
+const mongoUri = process.env.MONGO_URI?.trim() || "mongodb://127.0.0.1:27017/adminDB";
 
 /* mongodb+srv DNS FIX */
 
@@ -63,7 +63,9 @@ mongoose
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/blogs", blogRoutes);
-app.use("/api/admin", adminRoutes);/* ================= TEST ROUTE ================= */
+app.use("/api/admin", adminRoutes);
+
+/* ================= TEST ROUTE ================= */
 
 app.get("/", (req, res) => {
   res.send("Server Running...");

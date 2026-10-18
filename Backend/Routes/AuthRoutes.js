@@ -1,7 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 const Admin = require("../models/Admin");
+
+const fallbackAdminEmail = (process.env.DEFAULT_ADMIN_EMAIL || "admin@gmail.com").trim().toLowerCase();
+const fallbackAdminPassword = process.env.DEFAULT_ADMIN_PASSWORD || "admin123";
+
+const getFallbackAdmin = async () => ({
+  _id: "fallback-admin",
+  username: "Admin",
+  email: fallbackAdminEmail,
+  password: await bcrypt.hash(fallbackAdminPassword, 10),
+  avatar: "",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+});
 
 // ================= LOGIN =================
 router.post("/login", async (req, res) => {
@@ -12,6 +26,22 @@ router.post("/login", async (req, res) => {
       return res.json({ success: false, message: "Email and password required" });
 
     email = String(email).trim().toLowerCase();
+
+    if (mongoose.connection.readyState !== 1) {
+      const fallbackAdmin = await getFallbackAdmin();
+
+      if (email !== fallbackAdmin.email)
+        return res.json({ success: false, message: "Email not found" });
+
+      const isMatch = await bcrypt.compare(password, fallbackAdmin.password);
+      if (!isMatch)
+        return res.json({ success: false, message: "Wrong password" });
+
+      const safe = { ...fallbackAdmin };
+      delete safe.password;
+
+      return res.json({ success: true, message: "Login successful", admin: safe });
+    }
 
     const admin = await Admin.findOne({ email });
     if (!admin)
@@ -26,6 +56,7 @@ router.post("/login", async (req, res) => {
 
     return res.json({ success: true, message: "Login successful", admin: safe });
   } catch (err) {
+    console.error("Login error:", err);
     return res.json({ success: false, message: "Server Error" });
   }
 });

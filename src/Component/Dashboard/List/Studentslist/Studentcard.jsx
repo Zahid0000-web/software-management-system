@@ -1,6 +1,6 @@
 // StudentCard.jsx
 import React from "react";
-import FeeSection from "./FeeSection";
+import FeeSection from "./Feesection";
 
 const StudentCard = ({
   student,

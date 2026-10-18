@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getFeeData } from "../List/Studentslist/feeStorage";
+import { getFeeData } from "../List/Studentslist/Feestorage";
 
 const API_URL = "http://localhost:5001";
 
